@@ -33,5 +33,7 @@ defmodule Utrust.Transactions do
       {true, items} -> {:confirmed, items}
       {false, items} -> {:unconfirmed, items}
     end)
+    |> Map.put_new(:confirmed, [])
+    |> Map.put_new(:unconfirmed, [])
   end
 end

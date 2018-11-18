@@ -14,4 +14,8 @@ import "phoenix_html"
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"
+import socket from "./socket"
+// texas expects you to have `socket` imported
+import Texas from "texasjs"
+new Texas(socket)
+

@@ -1,7 +1,8 @@
 defmodule UtrustWeb.PageController do
   use UtrustWeb, :controller
+  import Texas.Controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    texas_render(conn, "index.html", texas: UtrustWeb.PageView.data(conn))
   end
 end

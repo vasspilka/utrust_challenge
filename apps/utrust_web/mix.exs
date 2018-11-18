@@ -44,6 +44,7 @@ defmodule UtrustWeb.MixProject do
       {:gettext, "~> 0.11"},
       {:utrust, in_umbrella: true},
       {:jason, "~> 1.0"},
+      {:texas, "~> 0.3"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

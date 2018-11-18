@@ -8,6 +8,11 @@ use Mix.Config
 config :utrust_web,
   generators: [context_app: :utrust]
 
+# Texas config
+config :phoenix, :template_engines, texas: Texas.TemplateEngine
+config :texas, pubsub: UtrustWeb.Endpoint
+config :texas, router: UtrustWeb.Router
+
 # Configures the endpoint
 config :utrust_web, UtrustWeb.Endpoint,
   url: [host: "localhost"],

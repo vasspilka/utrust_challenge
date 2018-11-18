@@ -1,5 +1,6 @@
 defmodule UtrustWeb.UserSocket do
   use Phoenix.Socket
+  use Texas.Socket
 
   ## Channels
   # channel "room:*", UtrustWeb.RoomChannel
