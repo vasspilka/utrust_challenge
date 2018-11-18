@@ -35,7 +35,9 @@ defmodule Utrust.MixProject do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    []
+    [
+      {:etherapi, in_umbrella: true}
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

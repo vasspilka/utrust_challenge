@@ -17,7 +17,7 @@ defmodule Etherapi do
   """
   @spec get_transaction_block_number(binary) :: number
   def get_transaction_block_number(txhash) when is_binary(txhash) do
-    {:ok, %{blockNumber: block_number }} = Etherscan.eth_get_transaction_by_hash(txhash)
+    {:ok, %{blockNumber: block_number}} = Etherscan.eth_get_transaction_by_hash(txhash)
     block_number
   end
 end

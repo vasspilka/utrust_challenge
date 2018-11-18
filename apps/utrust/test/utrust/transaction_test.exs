@@ -15,6 +15,5 @@ defmodule Utrust.TransactionTest do
     assert_raise RuntimeError, fn ->
       Transaction.is_confirmed?(transaction, 1)
     end
-
   end
 end
