@@ -1,12 +1,16 @@
-defmodule Utrust.BlockchainState do
-  defstruct [:eth_block_number]
-
+defmodule Utrust.Blockchain do
   use GenServer
+
+  alias Utrust.Blockchain.State
 
   @moduledoc """
   Keep the state of the blockchain locally in memory.
   (We only care about the block heigh so thats the only thing we store.)
   """
+
+  defmodule State do
+    defstruct [:eth_block_number]
+  end
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -18,7 +22,7 @@ defmodule Utrust.BlockchainState do
 
   @impl true
   def init(_) do
-    state = %__MODULE__{
+    state = %State{
       eth_block_number: Etherapi.get_block_number()
     }
 
@@ -34,7 +38,7 @@ defmodule Utrust.BlockchainState do
 
   @impl true
   def handle_info(:update_blockchain_state, state) do
-    new_state = %__MODULE__{
+    new_state = %State{
       state
       | eth_block_number: Etherapi.get_block_number()
     }

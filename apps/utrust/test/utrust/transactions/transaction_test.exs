@@ -1,7 +1,7 @@
-defmodule Utrust.TransactionTest do
+defmodule Utrust.Transactions.TransactionTest do
   use ExUnit.Case
 
-  alias Utrust.Transaction
+  alias Utrust.Transactions.Transaction
 
   test "correctly detects a confirmed transaction" do
     transaction = %Transaction{

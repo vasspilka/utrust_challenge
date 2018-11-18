@@ -4,14 +4,14 @@ defmodule Utrust.Application do
   @moduledoc false
 
   alias Utrust.Transactions.Repository
-  alias Utrust.BlockchainState
+  alias Utrust.Blockchain
 
   use Application
 
   def start(_type, _args) do
     children = [
       Repository,
-      BlockchainState
+      Blockchain
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Utrust.Supervisor)

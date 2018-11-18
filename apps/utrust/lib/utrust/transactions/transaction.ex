@@ -1,4 +1,4 @@
-defmodule Utrust.Transaction do
+defmodule Utrust.Transactions.Transaction do
   defstruct [:txhash, :block_height]
 
   @type t :: %__MODULE__{
