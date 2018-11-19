@@ -2,16 +2,10 @@
   <h1>Utrust challenge</h1>
 </section>
 
+<form action="/update" method="post" class="main">
+  <input type="text" name="add_transaction" placeholder="Add transaction" autofocus></input>
+  <button type="submit" style="display:none"></button>
+</form>
 
-<section class="row">
-  <article class="column">
-    <h2>Unconfirmed</h2>
-    <dl data-texas="unconfirmed">
-    </dl>
-  </article>
-  <article class="column">
-    <h2>Confirmed</h2>
-    <dl data-texas="confirmed">
-    </dl>
-  </article>
+<section data-texas="transactions">
 </section>
