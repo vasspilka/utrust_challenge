@@ -5,30 +5,32 @@ defmodule Utrust.Transactions do
   @doc """
   Pushes a transaction to the store.
   """
-  def push_transaction(txhash) do
+  @spec push(binary) :: :ok
+  def push(txhash) do
     Utrust.Transactions.Processor.process({:push, txhash})
   end
 
   @doc """
   Confirms a stored transaction.
   """
-  def confirm_transaction(txhash) do
-    Utrust.Transactions.Processor.process({:confirm, txhash})
+  @spec confirm(Transaction.t()) :: :ok
+  def confirm(transaction) do
+    Utrust.Transactions.Processor.process({:confirm, transaction})
   end
 
   @doc """
   Gets all transactions.
   """
-  def get_transactions() do
-    Repository.all()
+  def all() do
+    :sys.get_state(Repository)
   end
 
   @doc """
   Gets transactions from the repository.
   Then groups them to confirmed and unconfirmed.
   """
-  def get_transactions_groupped() do
-    Repository.all()
+  def get_groupped() do
+    all()
     |> Enum.group_by(&Transaction.is_confirmed?/1)
     |> Map.new(fn
       {true, items} -> {:confirmed, items}

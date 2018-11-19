@@ -1,6 +1,7 @@
 defmodule Utrust.Transactions.Repository do
   use GenServer
 
+  alias Utrust.Transactions
   alias Utrust.Transactions.Transaction
 
   @moduledoc """
@@ -19,11 +20,6 @@ defmodule Utrust.Transactions.Repository do
   end
 
   @doc false
-  def all() do
-    GenServer.call(__MODULE__, :get_all)
-  end
-
-  @doc false
   def unconfirmed() do
     GenServer.call(__MODULE__, :unconfirmed)
   end
@@ -39,8 +35,18 @@ defmodule Utrust.Transactions.Repository do
 
   @impl true
   def handle_cast({:push, new_transaction}, state) do
+    case Enum.find(state, &Transaction.is?(&1, new_transaction.txhash)) do
+      nil ->
+        Transactions.confirm(new_transaction)
+        {:noreply, [new_transaction | state]}
 
-    {:noreply, [new_transaction | state]}
+      found ->
+        unless found.confirmed? do
+          Transactions.confirm(new_transaction)
+        end
+
+        {:noreply, state}
+    end
   end
 
   @impl true
@@ -52,11 +58,6 @@ defmodule Utrust.Transactions.Repository do
       end)
 
     {:noreply, new_state}
-  end
-
-  @impl true
-  def handle_call(:get_all, _from, transactions) do
-    {:reply, transactions, transactions}
   end
 
   @impl true

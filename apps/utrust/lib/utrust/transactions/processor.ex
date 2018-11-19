@@ -30,19 +30,31 @@ defmodule Utrust.Transactions.Processor do
   @impl true
   def handle_cast(command, state) do
     case command do
-      {:push, txhash }->
+      {:push, txhash} ->
         Repository.push(%Transaction{
           txhash: txhash,
           block_height: Etherapi.get_transaction_block_number(txhash),
-          received_at: NaiveDateTime.utc_now
+          received_at: NaiveDateTime.utc_now()
         })
-      {:confirm, txhash} ->
+
+      {:confirm, transaction} ->
         %{eth_block_number: block_number} = Utrust.Blockchain.get_state()
 
-        Repository.confirm(txhash)
-      _ -> "NOOP"
-    end
+        case Transaction.is_confirmed?(transaction, block_number) do
+          true ->
+            Repository.confirm(transaction.txhash)
 
+          false ->
+            # Normally would use send_after and handle info but lazy
+            Task.async(fn ->
+              :timer.sleep(1000)
+              GenServer.cast(__MODULE__, command)
+            end)
+        end
+
+      _ ->
+        "NOOP"
+    end
 
     new_state = %{
       command_history: [command | state.command_history],

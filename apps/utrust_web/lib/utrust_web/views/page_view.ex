@@ -9,7 +9,7 @@ defmodule UtrustWeb.PageView do
 
   def transactions(_conn) do
     html =
-      Transactions.get_transactions_groupped()
+      Transactions.get_groupped()
       |> Enum.reduce("", fn type, acc ->
         acc <> transaction_row(type)
       end)

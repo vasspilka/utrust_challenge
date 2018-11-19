@@ -20,6 +20,8 @@ defmodule Utrust.Transactions.Transaction do
   Confirms the transaction.
   """
   @spec confirm(t) :: t
+  def confirm(%__MODULE__{confirmed?: true} = t), do: t
+
   def confirm(%__MODULE__{confirmed?: false} = t) do
     %__MODULE__{t | confirmed?: true, confirmed_at: NaiveDateTime.utc_now()}
   end
