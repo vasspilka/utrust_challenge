@@ -7,7 +7,7 @@ defmodule UtrustWeb.PageController do
   end
 
   def update(conn, %{"add_transaction" => txhash}) do
-    Utrust.Transactions.push_transaction(txhash)
+    Utrust.Transactions.push_transaction(String.trim(txhash))
     UtrustWeb.Endpoint.broadcast("texas:diff:transactions", "", %{})
     texas_redirect(conn, to: "/")
   end
