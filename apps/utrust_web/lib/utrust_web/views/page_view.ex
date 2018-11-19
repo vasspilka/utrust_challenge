@@ -10,8 +10,9 @@ defmodule UtrustWeb.PageView do
           "<dt>#{transaction.txhash}</dt>"
         end)
         |> Floki.parse()
+        |> List.wrap
 
-      {key, {key, [], html}}
-    end
+      {key, {:list, [], html}}
+     end
   end
 end

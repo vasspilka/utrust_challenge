@@ -21,7 +21,8 @@ defmodule Utrust.TransactionsTest do
                  txhash: @txhash,
                  block_height: 4_954_885
                }
-             ]
+             ],
+             unconfirmed: []
            } == Transactions.get_transactions_groupped()
   end
 end
