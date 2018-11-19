@@ -25,4 +25,10 @@ defmodule Utrust.TransactionsTest do
              unconfirmed: []
            } == Transactions.get_transactions_groupped()
   end
+
+  test "it crushes down and burns when a bad txhash is registered" do
+    assert_raise MatchError, fn ->
+      Transactions.push_transaction("dealwithit")
+    end
+  end
 end
