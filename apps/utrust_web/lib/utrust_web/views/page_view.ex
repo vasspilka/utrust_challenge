@@ -7,7 +7,7 @@ defmodule UtrustWeb.PageView do
     %{transactions: transactions(conn)}
   end
 
-  def transactions(conn) do
+  def transactions(_conn) do
     html =
       Transactions.get_transactions_groupped()
       |> Enum.reduce("", fn type, acc ->

@@ -3,7 +3,7 @@ defmodule Utrust.Application do
   # for more information on OTP Applications
   @moduledoc false
 
-  alias Utrust.Transactions.Repository
+  alias Utrust.Transactions.{Processor, Repository}
   alias Utrust.Blockchain
 
   use Application
@@ -11,7 +11,8 @@ defmodule Utrust.Application do
   def start(_type, _args) do
     children = [
       Repository,
-      Blockchain
+      Blockchain,
+      Processor
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Utrust.Supervisor)

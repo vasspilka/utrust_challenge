@@ -6,11 +6,14 @@ defmodule Utrust.Transactions do
   Pushes a transaction to the store.
   """
   def push_transaction(txhash) do
-    %Transaction{
-      txhash: txhash,
-      block_height: Etherapi.get_transaction_block_number(txhash)
-    }
-    |> Repository.push()
+    Utrust.Transactions.Processor.process({:push, txhash})
+  end
+
+  @doc """
+  Confirms a stored transaction.
+  """
+  def confirm_transaction(txhash) do
+    Utrust.Transactions.Processor.process({:confirm, txhash})
   end
 
   @doc """
@@ -25,10 +28,8 @@ defmodule Utrust.Transactions do
   Then groups them to confirmed and unconfirmed.
   """
   def get_transactions_groupped() do
-    %{eth_block_number: block_number} = Utrust.Blockchain.get_state()
-
     Repository.all()
-    |> Enum.group_by(&Transaction.is_confirmed?(&1, block_number))
+    |> Enum.group_by(&Transaction.is_confirmed?/1)
     |> Map.new(fn
       {true, items} -> {:confirmed, items}
       {false, items} -> {:unconfirmed, items}
