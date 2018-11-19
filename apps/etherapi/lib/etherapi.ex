@@ -3,6 +3,9 @@ defmodule Etherapi do
   Documentation for Etherapi.
   """
 
+  # Testing requests for external services in a doctest must definitely be a great idea!!
+  # Certainly not a smell! xD
+
   @doc """
   Gets the current block height of the whole Ethereum blockchain.
 
