@@ -2,6 +2,10 @@ defmodule Utrust.Transactions do
   alias Utrust.Transactions.Repository
   alias Utrust.Transactions.Transaction
 
+  @moduledoc """
+  Core interface for transaction related actions.
+  """
+
   @doc """
   Pushes a transaction to the store.
   """
@@ -21,6 +25,7 @@ defmodule Utrust.Transactions do
   @doc """
   Gets all transactions.
   """
+  @spec all() :: list(Transaction.t)
   def all() do
     :sys.get_state(Repository)
   end
@@ -29,6 +34,7 @@ defmodule Utrust.Transactions do
   Gets transactions from the repository.
   Then groups them to confirmed and unconfirmed.
   """
+  @spec get_groupped() :: %{confirmed: list(Transaction.t), unconfirmed: list(Transaction.t)}
   def get_groupped() do
     all()
     |> Enum.group_by(&Transaction.is_confirmed?/1)
